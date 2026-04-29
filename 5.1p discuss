@@ -1,0 +1,105 @@
+import tkinter as tk
+from gpiozero import LED
+
+# LED pins 
+living_room_led = LED(17)
+bathroom_led = LED(27)
+closet_led = LED(22)
+
+# LEDs start OFF
+living_room_led.off()
+bathroom_led.off()
+closet_led.off()
+
+# create window
+window = tk.Tk()
+window.title("Linda's Light Control")
+window.geometry("350x250")
+
+# variables for toggle state
+living_var = tk.IntVar()
+bathroom_var = tk.IntVar()
+closet_var = tk.IntVar()
+
+# toggle func
+def toggle_living_room():
+    if living_var.get() == 1:
+        living_room_led.on()
+        print("Living Room light is ON")
+    else:
+        living_room_led.off()
+        print("Living Room light is OFF")
+
+def toggle_bathroom():
+    if bathroom_var.get() == 1:
+        bathroom_led.on()
+        print("Bathroom light is ON")
+    else:
+        bathroom_led.off()
+        print("Bathroom light is OFF")
+
+def toggle_closet():
+    if closet_var.get() == 1:
+        closet_led.on()
+        print("Closet light is ON")
+    else:
+        closet_led.off()
+        print("Closet light is OFF")
+
+# exit
+def exit_program():
+    living_room_led.off()
+    bathroom_led.off()
+    closet_led.off()
+    window.destroy()
+
+# headings
+title_label = tk.Label(window, text="Choose room lights", font=("Arial", 14))
+title_label.pack(pady=10)
+
+# square box toggle buttons
+living_check = tk.Checkbutton(
+    window,
+    text="Living Room",
+    variable=living_var,
+    command=toggle_living_room,
+    indicatoron=False,   # makes it a square button
+    width=20,
+    height=2,
+    bg="lightgray",
+    selectcolor="lightgreen"
+)
+living_check.pack(pady=5)
+
+bathroom_check = tk.Checkbutton(
+    window,
+    text="Bathroom",
+    variable=bathroom_var,
+    command=toggle_bathroom,
+    indicatoron=False,
+    width=20,
+    height=2,
+    bg="lightgray",
+    selectcolor="lightgreen"
+)
+bathroom_check.pack(pady=5)
+
+closet_check = tk.Checkbutton(
+    window,
+    text="Closet",
+    variable=closet_var,
+    command=toggle_closet,
+    indicatoron=False,
+    width=20,
+    height=2,
+    bg="lightgray",
+    selectcolor="lightgreen"
+)
+closet_check.pack(pady=5)
+
+# exits button
+exit_button = tk.Button(window, text="Exit", command=exit_program)
+exit_button.pack(pady=20)
+
+# runs GUI
+window.mainloop()
